@@ -1,0 +1,41 @@
+/*
+Programação Estruturada | 2024.2
+Aluna: Kailane Lisley (RA: 00000851345)
+*/
+#include <stdio.h>
+
+void swap(double *a, double *b);
+
+int main(){
+    
+    int QTD_ALUNOS;
+    printf("Digite a capacidade total: ");
+    scanf("%d", &QTD_ALUNOS);
+
+    printf("\n");
+    double nota[QTD_ALUNOS];
+
+    int i;
+    for(i=0; i<QTD_ALUNOS;i++){
+
+        printf("Digite o %dº número: ", i + 1);
+        scanf("%lf", &nota[i]);
+
+        while(i!=0 && nota[i]<nota[i-1]){
+            swap(&nota[i], &nota[i-1]);
+            i--;
+        }
+    }
+    printf("\n");
+    
+    for(int i=0; i<QTD_ALUNOS;i++){
+        printf("nota[%d] = %.1f \n", i + 1, nota[i]);
+    }
+    printf("\n");
+}
+
+void swap(double *a, double *b){
+    double aux = *a;
+    *a = *b;
+    *b = aux;
+}
