@@ -15,15 +15,15 @@ int main(){
     printf("\n");
     double nota[QTD_ALUNOS];
 
-    int i;
-    for(i=0; i<QTD_ALUNOS;i++){
+    for(int i=0; i<QTD_ALUNOS;i++){
 
         printf("Digite o %dº número: ", i + 1);
         scanf("%lf", &nota[i]);
 
-        while(i!=0 && nota[i]<nota[i-1]){
-            swap(&nota[i], &nota[i-1]);
-            i--;
+        int j = i;
+        while(j!=0 && nota[j]<nota[j-1]){
+            swap(&nota[j], &nota[j-1]);
+            j--;
         }
     }
     printf("\n");
