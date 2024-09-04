@@ -4,7 +4,7 @@ Aluna: Kailane Lisley (RA: 00000851345)
 */
 #include <stdio.h>
 
-void swap(double *a, double *b);
+void inserirOrdenado(double[], int tam, double valor);
 
 int main(){
     
@@ -14,17 +14,11 @@ int main(){
 
     printf("\n");
     double nota[QTD_ALUNOS];
-
     for(int i=0; i<QTD_ALUNOS;i++){
-
+        double n;
         printf("Digite o %dº número: ", i + 1);
-        scanf("%lf", &nota[i]);
-
-        int j = i;
-        while(j!=0 && nota[j]<nota[j-1]){
-            swap(&nota[j], &nota[j-1]);
-            j--;
-        }
+        scanf("%lf", &n);
+        inserirOrdenado(nota, i, n);
     }
     printf("\n");
     
@@ -34,8 +28,11 @@ int main(){
     printf("\n");
 }
 
-void swap(double *a, double *b){
-    double aux = *a;
-    *a = *b;
-    *b = aux;
+void inserirOrdenado(double vetor[], int tam, double valor){
+    int i = tam - 1;
+    while(i>=0 && vetor[i]>valor){
+        vetor[i+1] = vetor[i];
+        i--;
+    }
+    vetor[i+1] = valor;
 }
