@@ -1,3 +1,7 @@
+/*
+Programação Estruturada | 2024.2
+Aluna: Kailane Lisley (RA: 00000851345)
+*/
 #include <stdio.h>
 
 void inserirOrdenado(int vetor[], int tam, int valor);
