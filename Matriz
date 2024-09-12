@@ -1,0 +1,167 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+#define QTD_LINHAS 100
+#define QTD_COLUNAS 100
+
+void lerMatriz(int mat[][QTD_COLUNAS], int lin, int col);
+void preencherMatrizAleatoria(int mat[][QTD_COLUNAS], int lin, int col);
+void imprimirMatriz(int mat[][QTD_COLUNAS], int lin, int col);
+void buscar(int mat[][QTD_COLUNAS], int lin, int col, int valor);
+
+int lerDentroIntervalo(int min, int max);
+int imparesMat(int mat[][QTD_COLUNAS], int lin, int col);
+int somatorioMatriz(int mat[][QTD_COLUNAS], int lin, int col);
+double mediaM(int somatorio, int linhas, int colunas);
+double mediaLinha(int somatorio, int colunas);
+
+int main() {
+    int qtdLinhas, qtdColunas;
+    int matriz[QTD_LINHAS][QTD_COLUNAS];
+
+    printf("Digite a quantidade de linhas (1-%d): ", QTD_LINHAS);
+    qtdLinhas = lerDentroIntervalo(1, QTD_LINHAS);
+    printf("Digite a quantidade de colunas (1-%d): ", QTD_COLUNAS);
+    qtdColunas = lerDentroIntervalo(1, QTD_COLUNAS);
+
+    preencherMatrizAleatoria(matriz, qtdLinhas, qtdColunas);
+    printf("\n--------------------\n");
+    imprimirMatriz(matriz, qtdLinhas, qtdColunas);
+    printf("--------------------\n");
+
+    int impar = imparesMat(matriz, qtdLinhas, qtdColunas);
+    printf("\nA quantidade de valores ímpares na matriz é %d\n", impar);
+
+    int v;
+    printf("\nQual valor deseja procurar?: ");
+    scanf("%d", &v);
+    /*
+    int busca = buscar(matriz, qtdLinhas, qtdColunas, v);
+    if(busca == 1)){
+        printf("Valor encontrado!");
+    } else {
+        printf("Valor Não encontrado!");
+    }
+    */
+    buscar(matriz, qtdLinhas, qtdColunas, v);
+    int soma = somatorioMatriz(matriz, qtdLinhas, qtdColunas);
+    printf("A soma de todos os elementos da matriz é %d\n", soma);
+
+    int media_M = mediaM(soma, qtdLinhas, qtdColunas);
+    printf("A média de todos os elementos da matriz é %.2lf\n", media_M);
+
+    for(int i=0; i<qtdLinhas; i++){
+        int somal = 0;
+        for(int j=0; j<qtdColunas; j++){
+            somal += mat[i][j];
+        }
+        int medial = mediaLinha(somal, qtdColunas);
+        printf("A média da linha %d é %.2lf\n", i+1, medial);
+    }
+    printf("\n");
+    return 0;
+}
+
+void lerMatriz(int mat[][QTD_COLUNAS], int lin, int col) {
+    for (int i = 0; i < lin; ++i) {
+        for (int j = 0; j < col; ++j) {
+            printf("Digite mat[%d][%d]: ", i, j);
+            scanf("%d", &mat[i][j]);
+        }
+    }
+}
+
+void preencherMatrizAleatoria(int mat[][QTD_COLUNAS], int lin, int col) {
+    for (int i = 0; i < lin; ++i) {
+        for (int j = 0; j < col; ++j) {
+            mat[i][j] = rand() % 100 + 1;
+        }
+    }
+}
+
+void imprimirMatriz(int mat[][QTD_COLUNAS], int lin, int col) {
+    for (int i = 0; i < lin; ++i) {
+        for (int j = 0; j < col; ++j) {
+            printf("%d\t", mat[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+int lerDentroIntervalo(int min, int max) {
+    int valor;
+    scanf("%d", &valor);
+    while (valor < min || valor > max) {
+        printf("Valor invalido! Digite valor entre %d e %d: ", min, max);
+        scanf("%d", &valor);
+    }
+    return valor;
+}
+
+int imparesMat(int mat[][QTD_COLUNAS], int lin, int col){
+    int Q_imp = 0;
+    for (int i = 0; i < lin; ++i) {
+        for (int j = 0; j < col; ++j) {
+            if(mat[i][j] % 2 != 0){
+                Q_imp++;
+            }
+        }
+    }
+    return Q_imp;
+}
+
+void buscar(int mat[][QTD_COLUNAS], int lin, int col, int valor) {
+    int encontrado = 0;
+    for (int i = 0; i < lin; i++) {
+        for (int j = 0; j < col; j++) {
+            if (mat[i][j] == valor) {
+                printf("Valor encontrado na linha %d e coluna %d\n", i+1, j+1);
+                encontrado = 1;
+                break;
+            }
+        }
+        if (encontrado) {
+            break;
+        }
+    }
+    if (!encontrado) {
+        printf("Valor não encontrado\n");
+    }
+}
+/*
+int buscar(int mat[][QTD_COLUNAS], int lin, int col, int valor) {
+    for (int i = 0; i < lin; i++) {
+        for (int j = 0; j < col; j++) {
+            if (mat[i][j] == valor) {
+                printf("Valor encontrado na linha %d e coluna %d\n", i+1, j+1);
+                return 1; // Valor encontrado
+            }
+        }
+    }
+    return 0; // Valor não encontrado
+}
+*/
+int somatorioMatriz(int mat[][QTD_COLUNAS], int lin, int col){
+    int soma;
+    for (int i = 0; i < lin; ++i) {
+        for (int j = 0; j < col; ++j) {
+            soma += mat[i][j];
+        }
+    }
+    return soma;
+}
+
+double mediaM(int somatorio, int linhas, int colunas){
+    if (linhas * colunas == 0) {
+        printf("Erro: Divisão por zero!\n");
+        return 0; // Ou outro valor indicando erro
+    }
+    int media = (double)somatorio/(linhas*colunas);
+    return media;
+}
+
+double mediaLinha(int somatorio, int colunas){
+    int medial = (double)somatorio/colunas;
+    return medial;
+}
