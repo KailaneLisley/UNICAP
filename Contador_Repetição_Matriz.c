@@ -13,7 +13,7 @@ void preencherMatriz(int m[][N], int lin, int col);
 void imprimirMatriz(int m[][N], int lin, int col);
 void maiorCadaColuna(int m[][N], int lin, int col, int v[]);
 void imprimirVetor(int v[], int tam);
-int maisRepetidosLinhaOuColuna(int m[][N], int lin, int col);
+int maisRepetidos_L_C(int m[][N], int lin, int col);
 
 int main() {
     int matriz[M][N];
@@ -98,7 +98,7 @@ int contarRepetidos(int v[], int tam) {
 }
 
 //Função para verificar se há mais repetições em uma linhas ou em uma colunas e informar o indice respectivo 
-int maisRepetidosLinhaOuColuna(int m[][N], int lin, int col) {
+int maisRepetidos_L_C(int m[][N], int lin, int col) {
     int maxRepeticao = 0;
     int indice = 0;
     int isLinha = 1;  // 1 = linha, 0 = coluna
@@ -110,8 +110,8 @@ int maisRepetidosLinhaOuColuna(int m[][N], int lin, int col) {
             linha[j] = m[i][j];  
         }
         int repetidos = contarRepetidos(linha, col);  
-        if (repetidos > maxRepetidos) {
-            maxRepetidos = repetidos;
+        if (repetidos > maxRepeticao) {
+            maxRepeticao = repetidos;
             indice = i;
             isLinha = 1;
         }
@@ -124,22 +124,22 @@ int maisRepetidosLinhaOuColuna(int m[][N], int lin, int col) {
             coluna[i] = m[i][j]; 
         }
         int repetidos = contarRepetidos(coluna, lin);  
-        if (repetidos > maxRepetidos) {
-            maxRepetidos = repetidos;
+        if (repetidos > maxRepeticao) {
+            maxRepeticao = repetidos;
             indice = j;
             isLinha = 0;  
         }
     }
 
-    if (maxRepetidos > 0) {
+    if (maxRepeticao > 0) {
         if (isLinha) {
-            printf("A linha %d tem o maior número de elementos repetidos: %d repetidos\n", indice, maxRepetidos);
+            printf("A linha %d tem o maior número de elementos repetidos: %d repetidos\n", indice, maxRepeticao);
         } else {
-            printf("A coluna %d tem o maior número de elementos repetidos: %d repetidos\n", indice, maxRepetidos);
+            printf("A coluna %d tem o maior número de elementos repetidos: %d repetidos\n", indice, maxRepeticao);
         }
     } else {
         printf("Nenhuma repetição encontrada nas linhas ou colunas.\n");
     }
 
-    return maxRepetidos;
+    return maxRepeticao;
 }
